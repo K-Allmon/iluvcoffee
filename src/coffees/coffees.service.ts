@@ -27,12 +27,15 @@ export class CoffeesService {
 
   create(createCoffeeDto: any) {
     this.coffees.push(createCoffeeDto);
+    return createCoffeeDto;
   }
 
   update(id: string, updateCoffeeDto: any) {
     const existingCoffee = this.findOne(id);
     if (existingCoffee) {
-      // update the existing entity
+      const updatedCoffee = { ...existingCoffee, ...updateCoffeeDto };
+      const coffeeIndex = this.coffees.findIndex(item => item.id === +id);
+      this.coffees.splice(coffeeIndex, 1, updatedCoffee);
     }
   }
 
